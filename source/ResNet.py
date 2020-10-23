@@ -97,7 +97,7 @@ class NN(object):
 		kernel_num = 32
 		with tf.variable_scope('U4'):
 			with tf.variable_scope('S0'):
-				shortcut = self._conv(x, 1, kernel_num, stride=2)
+				shortcut = self._maxpool_shortcut(x, kernel_num / 2)
 
 			with tf.variable_scope('C0'):
 				x = self._activation(x)
@@ -134,7 +134,7 @@ class NN(object):
 		kernel_num = 64
 		with tf.variable_scope('U7'):
 			with tf.variable_scope('S0'):
-				shortcut = self._conv(x, 1, kernel_num, stride=2)
+				shortcut = self._maxpool_shortcut(x, kernel_num / 2)
 
 			with tf.variable_scope('C0'):
 				x = self._activation(x)
@@ -250,6 +250,13 @@ class NN(object):
 			else:
 				print()
 				return self.W[-1]
+
+	def _maxpool_shortcut(self, x, input_channel):
+		# data_format = 'NCHW'
+		short_cut = tf.nn.max_pool2d(x, 2, 2, padding='VALID', data_format='NCHW')
+		short_cut = tf.pad(short_cut, tf.constant([[0, 0], [input_channel / 2, input_channel / 2], [0, 0], [0, 0]]))
+
+		return short_cut
 
 	def _conv(self, x, ksize, c_out, stride=1, padding='SAME', name='conv'):
 		c_in = x.get_shape().as_list()[1]

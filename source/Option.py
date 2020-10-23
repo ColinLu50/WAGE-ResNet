@@ -5,7 +5,7 @@ debug = False
 Time = time.strftime('%Y-%m-%d', time.localtime())
 # Notes = 'vgg7 2888'
 # Notes = 'temp'
-Notes = 'ResNet20_2'
+Notes = 'ResNet20_1'
 
 GPU = [0]
 batchSize = 128
@@ -18,14 +18,15 @@ loadModel = None
 saveModel = '../model/' + Time + '(' + Notes + ')' + '.tf'
 
 bitsW = 4  # bit width of weights
-bitsA = 8  # bit width of activations
-bitsG = 8  # bit width of gradients
-bitsE = 8  # bit width of errors
+bitsA = 16  # bit width of activations
+bitsG = 4  # bit width of gradients || should be same as bits W?
+bitsE = 16  # bit width of errors
 
-bitsR = 16  # bit width of randomizer
+bitsR = 32  # bit width of randomizer
 
 lr = tf.Variable(initial_value=0., trainable=False, name='lr', dtype=tf.float32)
-lr_schedule = [0, 1, 70, 1./4, 100,1./8,120,0]
+lr_schedule = [0, 1, 90, 1./4, 135,1./8, 200,0]
+# lr_schedule = [0, 1./8, 5, 0]
 
 L2 = 0
 

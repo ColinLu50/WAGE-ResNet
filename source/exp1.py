@@ -1,5 +1,5 @@
 import time
-import pickle
+import cPickle
 import Log
 import Option
 import Quantize
@@ -32,7 +32,6 @@ def showVariable(keywords=None):
             Vars_key.append(var)
     return Vars_key
 
-
 def save_np(sess):
     print('save variables as numpy')
     Vars = tf.global_variables()
@@ -44,20 +43,18 @@ def save_np(sess):
         print(tmp)
         np_list.append(cur_w)
 
-    with open('../model/w_np_list_{}.pickle'.format(Option.Notes), 'wb') as f:
-        pickle.dump(np_list, f)
-
-    with open('../model/scale_list_{}.pickle'.format(Option.Notes), 'wb') as f:
-        pickle.dump(Option.W_scale, f)
+    with open('../model/w_np_list.pickle', 'wb') as f:
+      cPickle.dump(np_list, f)
 
     print('save success!')
+
 
 
 def main():
     # get Option
     GPU = Option.GPU
     batchSize = Option.batchSize
-    pathLog = '../log/' + Option.Time + '(' + Option.Notes + ')' + '.txt'
+    pathLog = '../log/' + Option.Time + '(exp1)' + '.txt'
     # f = open(pathLog, 'w')
     # sys.stdout = f
     Log.Log(pathLog, 'w+', 1)  # set log file
@@ -140,12 +137,14 @@ def main():
 
     print
     "\nOptimization Start!\n"
+    tmp_lr_schedule = [0, 1./8, 5, 0]
     for epoch in range(1000):
         # check lr_schedule
         if len(Option.lr_schedule) / 2:
-            if epoch == Option.lr_schedule[0]:
-                Option.lr_schedule.pop(0)
-                lr_new = Option.lr_schedule.pop(0)
+
+            if epoch == tmp_lr_schedule[0]:
+                tmp_lr_schedule.pop(0)
+                lr_new = tmp_lr_schedule.pop(0)
                 if lr_new == 0:
                     print('Optimization Ended!')
                     break
@@ -184,11 +183,11 @@ def main():
 
         if epoch == 0:
             errorTestBest = errorTest
-        if errorTest < errorTestBest:
-            if Option.saveModel is not None:
-                saver.save(sess, Option.saveModel)
-                print
-                'S',
+        # if errorTest < errorTestBest:
+        #     if Option.saveModel is not None:
+        #         saver.save(sess, Option.saveModel)
+        #         print
+        #         'S',
         if errorTest < errorTestBest:
             errorTestBest = errorTest
             print
@@ -197,8 +196,12 @@ def main():
         print
         ""
 
+
+
     save_np(sess)
     print('End of Training')
+
+
 
 
 if __name__ == '__main__':
