@@ -5,7 +5,7 @@ debug = False
 Time = time.strftime('%Y-%m-%d', time.localtime())
 # Notes = 'vgg7 2888'
 # Notes = 'temp'
-Notes = 'ResNet20'
+Notes = 'ResNet20_2'
 
 GPU = [0]
 batchSize = 128
@@ -25,7 +25,7 @@ bitsE = 8  # bit width of errors
 bitsR = 16  # bit width of randomizer
 
 lr = tf.Variable(initial_value=0., trainable=False, name='lr', dtype=tf.float32)
-lr_schedule = [0, 8, 70, 1, 100,1./8,120,0]
+lr_schedule = [0, 1, 70, 1./4, 100,1./8,120,0]
 
 L2 = 0
 

@@ -13,7 +13,7 @@
 *.txt
 .idea
 dataSet/cifar-10-batches-py
-
+model/
 
 # User-specific stuff
 .idea/**/workspace.xml
