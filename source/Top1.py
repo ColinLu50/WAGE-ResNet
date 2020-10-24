@@ -138,8 +138,7 @@ def main():
         # at the beginning, we discrete W
         sess.run([Net[0].W_q_op])
 
-    print
-    "\nOptimization Start!\n"
+    print "\nOptimization Start!\n"
     for epoch in range(1000):
         # check lr_schedule
         if len(Option.lr_schedule) / 2:
@@ -151,11 +150,9 @@ def main():
                     break
                 lr_old = sess.run(Option.lr)
                 sess.run(Option.lr.assign(lr_new))
-                print
-                'lr: %f -> %f' % (lr_old, lr_new)
+                print 'lr: %f -> %f' % (lr_old, lr_new)
 
-        print
-        'Epoch: %03d ' % (epoch),
+        print 'Epoch: %03d ' % (epoch),
 
         lossTotal = 0.
         errorTotal = 0
@@ -174,28 +171,23 @@ def main():
         lossTotal /= batchNumTrain
         errorTotal /= batchNumTrain
 
-        print
-        'Loss: %.4f Train: %.4f' % (lossTotal, errorTotal),
+        print 'Loss: %.4f Train: %.4f' % (lossTotal, errorTotal),
 
         # get test error
         errorTest = getErrorTest()
-        print
-        'Test: %.4f FPS: %d' % (errorTest, numTrain / (time.time() - t0)),
+        print 'Test: %.4f FPS: %d' % (errorTest, numTrain / (time.time() - t0)),
 
         if epoch == 0:
             errorTestBest = errorTest
         if errorTest < errorTestBest:
             if Option.saveModel is not None:
                 saver.save(sess, Option.saveModel)
-                print
-                'S',
+                print 'S',
         if errorTest < errorTestBest:
             errorTestBest = errorTest
-            print
-            'BEST',
+            print 'BEST',
 
-        print
-        ""
+        print ""
 
     save_np(sess)
     print('End of Training')

@@ -18,11 +18,11 @@ loadModel = None
 saveModel = '../model/' + Time + '(' + Notes + ')' + '.tf'
 
 bitsW = 4  # bit width of weights
-bitsA = 16  # bit width of activations
+bitsA = 8  # bit width of activations
 bitsG = 4  # bit width of gradients || should be same as bits W?
-bitsE = 16  # bit width of errors
+bitsE = 8  # bit width of errors
 
-bitsR = 32  # bit width of randomizer
+bitsR = 16  # bit width of randomizer
 
 lr = tf.Variable(initial_value=0., trainable=False, name='lr', dtype=tf.float32)
 lr_schedule = [0, 1, 90, 1./4, 135,1./8, 200,0]
