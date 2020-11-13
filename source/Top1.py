@@ -7,6 +7,7 @@ import ResNet
 import getData
 import tensorflow as tf
 from tqdm import tqdm
+import numpy as np
 
 
 # for single GPU quanzation
@@ -41,7 +42,7 @@ def save_np(sess):
         print(var.device, var.name, var.shape, var.dtype)
         cur_w = sess.run(var)
         tmp = cur_w * 2 ** (Option.bitsG - 1)
-        print(tmp)
+        print('min: {} max :{}'.format(np.min(tmp), np.max(tmp)))
         np_list.append(cur_w)
 
     with open('../model/w_np_list_{}.pickle'.format(Option.Notes), 'wb') as f:

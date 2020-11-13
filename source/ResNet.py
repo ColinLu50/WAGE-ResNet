@@ -13,12 +13,12 @@ class NN(object):
 		self.shapeY = Y.get_shape().as_list()
 
 		# if data dype is not float32, we assume that there is no preprocess
-		if X.dtype != tf.float32:
-			X = tf.cast(X, tf.float32)
-			print('Input data dype is not float32, perform simple preprocess [0,255]->[-1,1]')
-			X = X / 127.5 - 1
-		else:
-			print('Input data dype is float32, we assume they are preprocessed already')
+# 		if X.dtype != tf.float32:
+# 			X = tf.cast(X, tf.float32)
+# 			print('Input data dype is not float32, perform simple preprocess [0,255]->[-1,1]')
+# 			X = X / 127.5 - 1
+# 		else:
+# 			print('Input data dype is float32, we assume they are preprocessed already')
 
 		# quantize inputs
 		self.H = [X]

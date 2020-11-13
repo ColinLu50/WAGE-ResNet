@@ -19,6 +19,23 @@ def loadData(dataSet,batchSize,numThread):
 
   pathNPZ = '../dataSet/' + dataSet + '.npz'
   numpyTrainX, numpyTrainY, numpyTestX, numpyTestY, label = loadNPZ(pathNPZ)
+    
+  # Preprocess
+  print(numpyTrainX.dtype)
+  numpyTrainX = numpyTrainX.astype(np.float32)
+  numpyTestX = numpyTestX.astype(np.float32)
+
+  numpyTrainX = numpyTrainX / 255.
+  numpyTestX = numpyTestX / 255.
+  X_train_mean = np.mean(numpyTrainX, axis=0, dtype=np.float32)
+
+  numpyTrainX -= X_train_mean
+  numpyTestX -= X_train_mean
+
+
+  print(numpyTrainX.dtype)
+    
+  
   numTrain = numpyTrainX.shape[0]
   numTest = numpyTestX.shape[0]
 
